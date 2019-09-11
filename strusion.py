@@ -17,7 +17,7 @@ if args.legendas: #verficando se os argumentos estão presentes
 	leg2 = io.load(args.legendas[1])	# ''
 	
 	x_axis = 200 	# posição padrão do eixo de x
-	y_axis = 30		# posição padrão do eixo de y
+	y_axis = 45		# posição padrão do eixo de y
 
 	if args.x_axis:				# Verifica se o parametro foi definido para adicionalo
 		x_axis = args.x_axis[0]
