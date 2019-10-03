@@ -4,8 +4,8 @@
 This python tool provides a subtitle' handler, that allows you to fuse subtitles and change some features, like position, color and so on.
 ## Usage
 - [Fuse two subtitles](#basic-fusion)
-- [Fuse two subtitles and set position (above subtitle)](#basic-fusion-and-set-position)
-
+- [Fuse two subtitles and set position](#basic-fusion-and-set-position)
+- [Change subtitle position](#set-subtitle-position)
 ### Basic fusion
 The basic usage fuse two subtitles and shows them at the same time on screen, as the example below:
 
@@ -19,17 +19,21 @@ The basic usage fuse two subtitles and shows them at the same time on screen, as
 <i>Portuguese and english subtitles</i>
 </p>
 
-> The above subtitle positon are set by default 
+> The above subtitle position is set by default 
 
 For that use: 
 ```
 $ python strusion.py -S portuguese_sub.srt english_sub.srt -o fused_sub.srt
 ```
 ### Basic fusion and set position
-> Note that changes only the above subtitle
-
 Just add -x -y in the command: 
 ```
-$ python strusion.py -S portuguese_sub.srt english_sub.srt -o fused_sub.srt -x 200 -y 45
+$ python strusion.py -S portuguese_sub.srt english_sub.srt -o fused_sub.srt -x 192 -y 48
 ```
-
+> Note that changes only the above subtitle
+### Set subtitle position
+Just add -x -y in the command: 
+```
+$ python strusion.py -s movie_sub.srt -o movie_sub.mod.srt -x 192 -y 48
+```
+> Note the use of -s for handling just one subtitle 
