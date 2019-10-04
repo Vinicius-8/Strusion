@@ -64,7 +64,6 @@ def main():
 		leg1 = io.load(args.subtitle[0])
 		legOut = list()
 
-		banner()
 		sub_position_str = setPosition()	 	
 		color_str = setColor()
 		
@@ -106,7 +105,9 @@ def setColor():
 
 def configDefaultOutput(path):
 	index = path.rfind('.')
-	return str(path[:index]+".mod."+path[index+1:])
+	_path = str(path[:index]+".mod."+path[index+1:])
+	print("\n>> Output: {}".format(_path))
+	return _path
 
 main()
 
