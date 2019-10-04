@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser(description="Subtitle Fuser")
 
 parser.add_argument("-S","--subtitles",nargs=2,help="Subtitles to fuse", required=False)
 parser.add_argument("-s","--subtitle",nargs=1,help="Subtitle", required=False)
-parser.add_argument("-o","--output",nargs=1,help="output file", required=True)
+parser.add_argument("-o","--output",nargs=1,help="output file", required=False)
 parser.add_argument("-x","--x_axis",nargs=1,help="X axis pixels that stays above", required=False)
 parser.add_argument("-y","--y_axis",nargs=1,help="Y axis pixels that stays above", required=False)
 parser.add_argument("-c","--color",nargs=1,help="subtitle color", required=False)
@@ -25,11 +25,12 @@ sub_position_str = "{\pos(" + str(x_axis) + "," + str(y_axis) + ")}"
 sub_color = "ffffff"
 
 def main():
+	
 	if args.subtitles: # non empty args for 2 subs
 		leg1 = io.load(args.subtitles[0])	#loading file
 		leg2 = io.load(args.subtitles[1])	# ''
-		
-		banner()
+			
+
 		sub_position_str = setPosition()	 	
 		color_str = setColor()
 
@@ -56,8 +57,8 @@ def main():
 				control = True
 				
 
-
-		io.outputfile(args.output[0], leg1) 			#put into a srt file
+		
+		io.outputfile(args.output[0] if args.output else configDefaultOutput(args.subtitles[0]), leg1) 			#put into a srt file
 
 	elif args.subtitle:		#one sub 								
 		leg1 = io.load(args.subtitle[0])
@@ -88,7 +89,7 @@ def main():
 			if '-->' in leg1[i]:										# from here, the code goes to a new sub block
 				control = True
 
-		io.outputfile(args.output[0], legOut)
+		io.outputfile(args.output[0] if args.output else configDefaultOutput(args.subtitle[0]), legOut)
 
 
 def setPosition():	
@@ -103,6 +104,9 @@ def setPosition():
 def setColor():
 	return "<font color=\""+(args.color[0] if args.color else sub_color)+"\">"
 
+def configDefaultOutput(path):
+	index = path.rfind('.')
+	return str(path[:index]+".mod."+path[index+1:])
 
 main()
 
