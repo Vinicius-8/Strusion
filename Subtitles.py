@@ -54,10 +54,13 @@ def change_one_subtitle(args):
             sub1[i] = sub1[i][len(sub1[i]) - 1]
 
         if control:
+
+            print('-> ', sub1[i])
             sub_out.append(sub_position_str + color_str + sub1[i])
             control = False
 
         elif sub1[i] != '':
+
             sub_out.append(sub1[i])  # add the subsequent lines
 
         else:

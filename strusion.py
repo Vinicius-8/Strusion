@@ -13,20 +13,20 @@ args = parser.parse_args()
 
 
 def main():
-	if args.subtitles: 	 	# non empty args for 2 subs
-		subtitle_merged = Subtitles.merge_two_subtitles(args)
-		IO.output_file(args.output[0] if args.output else config_default_output(args.subtitles[0]), subtitle_merged) 			#put into a srt file
+    if args.subtitles: 	 	# non empty args for 2 subs
+        subtitle_merged = Subtitles.merge_two_subtitles(args)
+        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitles[0]), subtitle_merged) 			#put into a srt file
 
-	elif args.subtitle:		# one sub
-		subtitle = Subtitles.change_one_subtitle(args)
-		IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
+    elif args.subtitle:		# one sub
+        subtitle = Subtitles.change_one_subtitle(args)
+        #IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
 
 
 def config_default_output(path):
-	index = path.rfind('.')
-	_path = str(path[:index]+".mod."+path[index+1:])
-	print("\n>> Output: {}".format(_path))
-	return _path
+    index = path.rfind('.')
+    _path = str(path[:index]+".mod."+path[index+1:])
+    print("\n>> Output: {}".format(_path))
+    return _path
 
 
 main()
