@@ -1,31 +1,29 @@
-class IO:
 
-    def __init__(self):
-        pass
+def load(path):  # abre o aquivo e transforma em lista
+    obj_txt = ''
+    re = ''
+    try:
+        obj_txt = open(path, encoding="utf8") # por padrão é aberto em r
+        re = list(obj_txt.read().splitlines())
 
-    def load(self, path): #abre o aquivo e transforma em lista
-        try:
-            objTxt = open(path, encoding="utf8") # por padrão é aberto em r
-            re = list(objTxt.read().splitlines())
-        
-        except UnicodeDecodeError:
-            objTxt = open(path, encoding="ISO-8859-1")
-            re = list(objTxt.read().splitlines())
+    except UnicodeDecodeError:
+        obj_txt = open(path, encoding="ISO-8859-1")
+        re = list(obj_txt.read().splitlines())
 
-        except FileNotFoundError:
+    except FileNotFoundError:
 
-            print("O Aquivo não foi encontrado")
-            exit()      #sai do script
-        
-        
-        objTxt.close()
-        for ele in range(0, len(re)):
-            re[ele] = re[ele].strip() # eliminando quarquer tipo de espaço em cada linha
-        return re
+        print("O Aquivo não foi encontrado")
+        exit()      # sai do script
 
-    def outputfile(self, outputpath, lista): # joga os dados em um txt
-        o = open(outputpath, 'a+', encoding="utf8")
-        
-        for a in lista:
-            o.write(f"{a}\n")
-        o.close()
+    obj_txt.close()
+    for ele in range(0, len(re)):
+        re[ele] = re[ele].strip() # eliminando quarquer tipo de espaço em cada linha
+    return re
+
+
+def output_file(outputpath, lista): # joga os dados em um txt
+    o = open(outputpath, 'a+', encoding="utf8")
+
+    for a in lista:
+        o.write(f"{a}\n")
+    o.close()
