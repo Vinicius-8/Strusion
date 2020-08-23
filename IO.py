@@ -12,7 +12,7 @@ def load(path):  # abre o aquivo e transforma em lista
 
     except FileNotFoundError:
 
-        print("O Aquivo não foi encontrado")
+        print("The file was not found")
         exit()      # sai do script
 
     obj_txt.close()

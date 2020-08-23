@@ -9,6 +9,7 @@ parser.add_argument("-o", "--output", nargs=1, help="output file", required=Fals
 parser.add_argument("-x", "--x_axis", nargs=1, help="X axis pixels that stays above", required=False)
 parser.add_argument("-y", "--y_axis", nargs=1, help="Y axis pixels that stays above", required=False)
 parser.add_argument("-c", "--color", nargs=1, help="subtitle color", required=False)
+parser.add_argument("-d", "--delay", nargs=2, help="Increase or decrease the delay in a sub, put the millisecs then sub", required=False)
 args = parser.parse_args()	
 
 
@@ -19,7 +20,11 @@ def main():
 
     elif args.subtitle:		# one sub
         subtitle = Subtitles.change_one_subtitle(args)
-        #IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
+        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
+
+    elif args.delay:
+        subtitle = Subtitles.change_subtitle_delay(args)
+        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
 
 
 def config_default_output(path):
@@ -30,7 +35,7 @@ def config_default_output(path):
 
 
 main()
-
+print('\n> done')
 
 
 

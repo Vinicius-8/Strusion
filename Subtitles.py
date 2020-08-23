@@ -1,5 +1,5 @@
 import IO
-from argparse import ArgumentParser
+from math import ceil, floor
 
 #  Default values
 x_axis = 192 			# x axis for second sub
@@ -54,8 +54,6 @@ def change_one_subtitle(args):
             sub1[i] = sub1[i][len(sub1[i]) - 1]
 
         if control:
-
-            print('-> ', sub1[i])
             sub_out.append(sub_position_str + color_str + sub1[i])
             control = False
 
@@ -73,6 +71,19 @@ def change_one_subtitle(args):
     return sub_out
 
 
+def change_subtitle_delay(args):
+    millisecs = int(args.delay[0])
+    sub = IO.load(args.delay[1])
+    for i in range(len(sub)):
+        if '-->' in sub[i]:
+            slices = sub[i].split(" --> ")
+            ini = format_string_to_millisecs(slices[0])
+            end = format_string_to_millisecs(slices[1])
+            modification = "{} --> {}".format(format_millisecs_to_string(ini + millisecs), format_millisecs_to_string(end + millisecs))
+            sub[i] = modification
+    return sub
+
+
 def set_position(args):
     """
     Define the subtitle position on top
@@ -88,3 +99,28 @@ def set_position(args):
 
 def set_color(args):
     return "<font color=\"" + (args.color[0] if args.color else default_sub_color) + "\">"
+
+
+def format_millisecs_to_string(millis):
+    millis = str(millis)
+    millisecs = int(millis[-3:])
+    millis = int(millis)
+    seconds = (millis/1000) % 60
+    seconds = int(seconds)
+    minutes = (millis/(1000*60)) % 60
+    minutes = int(minutes)
+    hours = (millis/(1000*60*60)) % 24
+    string_formated = "{:02d}:{:02d}:{:02d},{:03d}".format(floor(hours), minutes, seconds, millisecs)
+    return string_formated
+
+
+def format_string_to_millisecs(string):
+    # all the vars are in millisecs
+    slices = string.split(':')
+    hour = int(slices[0])*(1000*60*60)
+    minutes = int(slices[1])*(1000*60)
+    slices2 = slices[2].split(',')
+    seconds = int(slices2[0])*1000
+    millisecs = int(slices2[1])
+    total = hour + minutes + seconds + millisecs
+    return total
