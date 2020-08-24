@@ -17,7 +17,7 @@ def load(path):  # abre o aquivo e transforma em lista
 
     obj_txt.close()
     for ele in range(0, len(re)):
-        re[ele] = re[ele].strip() # eliminando quarquer tipo de espaço em cada linha
+        re[ele] = re[ele].strip()  # eliminando quarquer tipo de espaço em cada linha
     return re
 
 

@@ -2,6 +2,7 @@ import argparse
 import IO
 import Subtitles
 
+
 parser = argparse.ArgumentParser(description="Subtitle Merger")
 parser.add_argument("-S", "--subtitles", nargs=2, help="Subtitles to fuse", required=False)
 parser.add_argument("-s", "--subtitle", nargs=1, help="Subtitle", required=False)

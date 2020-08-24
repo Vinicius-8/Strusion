@@ -1,5 +1,6 @@
 import IO
 from math import ceil, floor
+from progress.bar import Bar
 
 #  Default values
 x_axis = 192 			# x axis for second sub
@@ -17,9 +18,8 @@ def merge_two_subtitles(args):
     color_str = set_color(args)
     control = False  # control var to indicates that is a new sub block
     sub1.append('')
-
+    bar = Bar('Processing', max=len(sub2))
     for i in range(len(sub2)):
-
         if 'ï»¿' in sub2[i]:
             sub2[i] = sub2[i][len(sub2[i]) - 1]
 
@@ -36,6 +36,8 @@ def merge_two_subtitles(args):
 
         if '-->' in sub2[i]:  # from here, the code goes to a new sub block
             control = True
+        bar.next()
+    bar.finish()
     return sub1
 
 
@@ -47,9 +49,8 @@ def change_one_subtitle(args):
     color_str = set_color(args)
     control = False
     sub1.append('')
-
+    bar = Bar('Processing', max=len(sub1))
     for i in range(len(sub1)):
-
         if 'ï»¿' in sub1[i]:
             sub1[i] = sub1[i][len(sub1[i]) - 1]
 
@@ -67,13 +68,15 @@ def change_one_subtitle(args):
 
         if '-->' in sub1[i]:  # from here, the code goes to a new sub block
             control = True
-
+        bar.next()
+    bar.finish()
     return sub_out
 
 
 def change_subtitle_delay(args):
     millisecs = int(args.delay[0])
     sub = IO.load(args.delay[1])
+    bar = Bar('Processing', max=len(sub)/4)
     for i in range(len(sub)):
         if '-->' in sub[i]:
             slices = sub[i].split(" --> ")
@@ -81,6 +84,8 @@ def change_subtitle_delay(args):
             end = format_string_to_millisecs(slices[1])
             modification = "{} --> {}".format(format_millisecs_to_string(ini + millisecs), format_millisecs_to_string(end + millisecs))
             sub[i] = modification
+            bar.next()
+    bar.finish()
     return sub
 
 
