@@ -73,7 +73,7 @@ def change_one_subtitle(args):
     return sub_out
 
 
-def change_subtitle_delay(args):
+def change_subtitle_delay(args):    
     millisecs = int(args.delay[0])
     sub = IO.load(args.delay[1])
     bar = Bar('Processing', max=len(sub)/4)

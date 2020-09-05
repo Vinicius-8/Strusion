@@ -16,23 +16,43 @@ args = parser.parse_args()
 
 def main():
     if args.subtitles: 	 	# non empty args for 2 subs
-        subtitle_merged = Subtitles.merge_two_subtitles(args)
-        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitles[0]), subtitle_merged) 			#put into a srt file
-
-    elif args.subtitle:		# one sub
-        subtitle = Subtitles.change_one_subtitle(args)
-        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
+        if isSrt(args.subtitles[0]) and isSrt(args.subtitles[1]):                    	
+        	subtitle_merged = Subtitles.merge_two_subtitles(args)
+        	IO.output_file(args.output[0] if args.output else config_default_output(args.subtitles[0]), subtitle_merged) 			#put into a srt file
+        else:
+    	    print('\n\n>> [Fail] For now, only srt files are supported')
+                       
+    elif args.subtitle:		# one sub        
+        if isSrt(args.subtitle[0]):
+        	subtitle = Subtitles.change_one_subtitle(args)
+        	IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)               
+        else:
+        	print('\n\n>> [Fail] For now, only srt files are supported')
+        
 
     elif args.delay:
-        subtitle = Subtitles.change_subtitle_delay(args)
-        IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)
+    	if isSrt(args.delay[1]):   
+            try:
+                int(args.delay[0])
+            except ValueError:
+                print('\n\n>.[Fail] \'{}\' is not integer'.format(args.delay[0]))
+                return
+            subtitle = Subtitles.change_subtitle_delay(args)
+            IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)    
+    	else:
+    		print('\n\n>> [Fail] For now, only srt files are supported')
 
+        
 
 def config_default_output(path):
     index = path.rfind('.')
     _path = str(path[:index]+".mod."+path[index+1:])
     print("\n>> Output: {}".format(_path))
     return _path
+
+def isSrt(sub):
+	frag = sub.split('.')
+	return frag[-1] == 'srt'
 
 
 main()
