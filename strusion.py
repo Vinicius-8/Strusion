@@ -1,6 +1,6 @@
 import argparse
 import IO
-import Subtitles
+import subtitles
 
 
 parser = argparse.ArgumentParser(description="Subtitle Merger")
@@ -16,28 +16,31 @@ args = parser.parse_args()
 
 def main():
     if args.subtitles: 	 	# non empty args for 2 subs
-        if isSrt(args.subtitles[0]) and isSrt(args.subtitles[1]):                    	
-        	subtitle_merged = Subtitles.merge_two_subtitles(args)
+        if is_srt(args.subtitles[0]) and is_srt(args.subtitles[1]):                    	
+        	subtitle_merged = subtitles.merge_two_subtitles(args.subtitles[0], args.subtitles[1], 
+                color=args.color[0] if args.color else None, 
+                x_axis=args.x_axis[0] if args.x_axis else None, 
+                y_axis=args.y_axis[0] if args.y_axis else None)
         	IO.output_file(args.output[0] if args.output else config_default_output(args.subtitles[0]), subtitle_merged) 			#put into a srt file
         else:
     	    print('\n\n>> [Fail] For now, only srt files are supported')
                        
     elif args.subtitle:		# one sub        
-        if isSrt(args.subtitle[0]):
-        	subtitle = Subtitles.change_one_subtitle(args)
+        if is_srt(args.subtitle[0]):
+        	subtitle = subtitles.change_one_subtitle(args.subtitle[0], color=args.color[0], x_axis=args.x_axis[0], y_axis=args.y_axis[0])
         	IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)               
         else:
         	print('\n\n>> [Fail] For now, only srt files are supported')
         
 
     elif args.delay:
-    	if isSrt(args.delay[1]):   
+    	if is_srt(args.delay[1]):   
             try:
                 int(args.delay[0])
             except ValueError:
                 print('\n\n>.[Fail] \'{}\' is not integer'.format(args.delay[0]))
                 return
-            subtitle = Subtitles.change_subtitle_delay(args)
+            subtitle = subtitles.change_subtitle_delay(args.delay[0], args.delay[1])
             IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)    
     	else:
     		print('\n\n>> [Fail] For now, only srt files are supported')
@@ -50,7 +53,7 @@ def config_default_output(path):
     print("\n>> Output: {}".format(_path))
     return _path
 
-def isSrt(sub):
+def is_srt(sub):
 	frag = sub.split('.')
 	return frag[-1] == 'srt'
 

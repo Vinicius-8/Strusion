@@ -10,12 +10,12 @@ y_axis_bottom = 268		# y axis for second sub
 default_sub_color = "ffffff"
 
 
-def merge_two_subtitles(args):
-    sub1 = IO.load(args.subtitles[0])  # loading file
-    sub2 = IO.load(args.subtitles[1])  # ''
+def merge_two_subtitles(path_sub_1, path_sub_2, color=None, x_axis=None, y_axis=None):
+    sub1 = IO.load(path_sub_1)  # loading file
+    sub2 = IO.load(path_sub_2)  # ''
 
-    sub_position_str = set_position(args)
-    color_str = set_color(args)
+    sub_position_str = set_position(axis_x=x_axis, axis_y=y_axis, one_subtitle=False)
+    color_str = set_color(color)
     control = False  # control var to indicates that is a new sub block
     sub1.append('')
     bar = Bar('Processing', max=len(sub2))
@@ -41,12 +41,12 @@ def merge_two_subtitles(args):
     return sub1
 
 
-def change_one_subtitle(args):
-    sub1 = IO.load(args.subtitle[0])
+def change_one_subtitle(path_sub, color=None, x_axis=None, y_axis=None):
+    sub1 = IO.load(path_sub)
     sub_out = list()
 
-    sub_position_str = set_position(args)
-    color_str = set_color(args)
+    sub_position_str = set_position(axis_x=x_axis, axis_y=y_axis, one_subtitle=True)
+    color_str = set_color(color)
     control = False
     sub1.append('')
     bar = Bar('Processing', max=len(sub1))
@@ -73,9 +73,9 @@ def change_one_subtitle(args):
     return sub_out
 
 
-def change_subtitle_delay(args):    
-    millisecs = int(args.delay[0])
-    sub = IO.load(args.delay[1])
+def change_subtitle_delay(millis, path_sub):    
+    millisecs = int(millis)
+    sub = IO.load(path_sub)
     bar = Bar('Processing', max=len(sub)/4)
     for i in range(len(sub)):
         if '-->' in sub[i]:
@@ -89,21 +89,21 @@ def change_subtitle_delay(args):
     return sub
 
 
-def set_position(args):
+def set_position(one_subtitle, axis_x=None, axis_y=None): #axis
     """
     Define the subtitle position on top
-    :param args:
+    :param axis_x, axis_y:
     :return:
     """
 
     # two different position exists for the y axis, that's why the extra 'if' in y,
-    x = args.x_axis[0] if args.x_axis else x_axis  # se false usa o default
-    y = args.y_axis[0] if args.y_axis else (y_axis_bottom if args.subtitle else y_axis)
-    return "{\pos(" + str(x) + "," + str(y) + ")}"
+    x = axis_x if axis_x else x_axis  # se false usa o default
+    y = axis_y if axis_y else (y_axis_bottom if one_subtitle else y_axis)
+    return "{\\pos(" + str(x) + "," + str(y) + ")}"
 
 
-def set_color(args):
-    return "<font color=\"" + (args.color[0] if args.color else default_sub_color) + "\">"
+def set_color(color):
+    return "<font color=\"" + (color if color else default_sub_color) + "\">"
 
 
 def format_millisecs_to_string(millis):
