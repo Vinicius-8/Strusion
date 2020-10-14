@@ -1,7 +1,6 @@
 import IO
 from math import ceil, floor
-from progress.bar import Bar
-
+from tqdm import tqdm
 #  Default values
 x_axis = 192 			# x axis for second sub
 y_axis = 48				# y axis for second sub
@@ -18,8 +17,8 @@ def merge_two_subtitles(path_sub_1, path_sub_2, color=None, x_axis=None, y_axis=
     color_str = set_color(color)
     control = False  # control var to indicates that is a new sub block
     sub1.append('')
-    bar = Bar('Processing', max=len(sub2))
-    for i in range(len(sub2)):
+    
+    for i in tqdm(range(len(sub2))):        
         if 'ï»¿' in sub2[i]:
             sub2[i] = sub2[i][len(sub2[i]) - 1]
 
@@ -36,8 +35,6 @@ def merge_two_subtitles(path_sub_1, path_sub_2, color=None, x_axis=None, y_axis=
 
         if '-->' in sub2[i]:  # from here, the code goes to a new sub block
             control = True
-        bar.next()
-    bar.finish()
     return sub1
 
 
@@ -49,8 +46,7 @@ def change_one_subtitle(path_sub, color=None, x_axis=None, y_axis=None):
     color_str = set_color(color)
     control = False
     sub1.append('')
-    bar = Bar('Processing', max=len(sub1))
-    for i in range(len(sub1)):
+    for i in tqdm(range(len(sub1))):
         if 'ï»¿' in sub1[i]:
             sub1[i] = sub1[i][len(sub1[i]) - 1]
 
@@ -68,24 +64,19 @@ def change_one_subtitle(path_sub, color=None, x_axis=None, y_axis=None):
 
         if '-->' in sub1[i]:  # from here, the code goes to a new sub block
             control = True
-        bar.next()
-    bar.finish()
     return sub_out
 
 
 def change_subtitle_delay(millis, path_sub):    
     millisecs = int(millis)
-    sub = IO.load(path_sub)
-    bar = Bar('Processing', max=len(sub)/4)
-    for i in range(len(sub)):
+    sub = IO.load(path_sub)    
+    for i in tqdm(range(len(sub))):
         if '-->' in sub[i]:
             slices = sub[i].split(" --> ")
             ini = format_string_to_millisecs(slices[0])
             end = format_string_to_millisecs(slices[1])
             modification = "{} --> {}".format(format_millisecs_to_string(ini + millisecs), format_millisecs_to_string(end + millisecs))
-            sub[i] = modification
-            bar.next()
-    bar.finish()
+            sub[i] = modification            
     return sub
 
 

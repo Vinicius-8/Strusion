@@ -27,7 +27,10 @@ def main():
                        
     elif args.subtitle:		# one sub        
         if is_srt(args.subtitle[0]):
-        	subtitle = subtitles.change_one_subtitle(args.subtitle[0], color=args.color[0], x_axis=args.x_axis[0], y_axis=args.y_axis[0])
+        	subtitle = subtitles.change_one_subtitle(args.subtitle[0], 
+                color=args.color[0] if args.color else None, 
+                x_axis=args.x_axis[0] if args.x_axis else None,
+                y_axis=args.y_axis[0] if args.y_axis else None)
         	IO.output_file(args.output[0] if args.output else config_default_output(args.subtitle[0]), subtitle)               
         else:
         	print('\n\n>> [Fail] For now, only srt files are supported')
