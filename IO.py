@@ -1,14 +1,14 @@
 
 def load(path):  # abre o aquivo e transforma em lista
     obj_txt = ''
-    re = ''
+    readed_obj = ''
     try:
         obj_txt = open(path, encoding="utf8") # por padrão é aberto em r
-        re = list(obj_txt.read().splitlines())
+        readed_obj = list(obj_txt.read().splitlines())
 
     except UnicodeDecodeError:
         obj_txt = open(path, encoding="ISO-8859-1")
-        re = list(obj_txt.read().splitlines())
+        readed_obj = list(obj_txt.read().splitlines())
 
     except FileNotFoundError:
 
@@ -16,9 +16,9 @@ def load(path):  # abre o aquivo e transforma em lista
         exit()      # sai do script
 
     obj_txt.close()
-    for ele in range(0, len(re)):
-        re[ele] = re[ele].strip()  # eliminando quarquer tipo de espaço em cada linha
-    return re
+    for line in range(0, len(readed_obj)):
+        readed_obj[line] = readed_obj[line].strip()  # eliminando qualrquer tipo de espaço em cada linha
+    return readed_obj
 
 
 def output_file(outputpath, lista): # joga os dados em um txt

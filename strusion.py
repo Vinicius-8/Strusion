@@ -11,10 +11,10 @@ parser.add_argument("-x", "--x_axis", nargs=1, help="X axis pixels that stays ab
 parser.add_argument("-y", "--y_axis", nargs=1, help="Y axis pixels that stays above", required=False)
 parser.add_argument("-c", "--color", nargs=1, help="subtitle color", required=False)
 parser.add_argument("-d", "--delay", nargs=2, help="Increase or decrease the delay in a sub, put the millisecs then sub", required=False)
-args = parser.parse_args()	
 
 
 def main():
+    args = parser.parse_args()      
     if args.subtitles: 	 	# non empty args for 2 subs
         if is_srt(args.subtitles[0]) and is_srt(args.subtitles[1]):                    	
         	subtitle_merged = subtitles.merge_two_subtitles(args.subtitles[0], args.subtitles[1], 
@@ -50,19 +50,21 @@ def main():
 
         
 
-def config_default_output(path):
+def config_default_output(path): # adds .mod. to file name
     index = path.rfind('.')
-    _path = str(path[:index]+".mod."+path[index+1:])
+    _path = str(path[:index]+".mod."+path[index+1:])        # refatorar isso aqui pro caso de nomes com pontos
     print("\n>> Output: {}".format(_path))
     return _path
 
 def is_srt(sub):
-	frag = sub.split('.')
+	frag = sub.split('.')          # refatorar essa aqui tbm
 	return frag[-1] == 'srt'
 
 
-main()
-print('\n> done')
+if __name__ == '__main__':
+
+    main()
+    print('\n> done')
 
 
 

@@ -5,9 +5,12 @@ import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
-import subtitles
 
 PATH = sys.path[0]
+
+import subtitles
+
+
 
 def test_merge_two_subtitles():
 	sub1 = PATH+'/tests/subs/Matrix.eng.srt'
