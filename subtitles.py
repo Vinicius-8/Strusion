@@ -1,4 +1,4 @@
-import IO
+from Strusion import IO
 from math import floor
 from tqdm import tqdm
 #  Default values

@@ -1,6 +1,9 @@
 import pytest
 
-import os, sys, inspect
+import os
+import sys
+import inspect
+sys.path.append('..')
 
 absolute_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
 current_dir = os.path.dirname(absolute_path)
@@ -9,7 +12,7 @@ sys.path.insert(0, parent_dir)
 
 PATH = sys.path[0]
 
-import subtitles
+from Strusion import subtitles
 
 
 def test_merge_two_subtitles():
