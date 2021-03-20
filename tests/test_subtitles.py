@@ -1,40 +1,36 @@
 import pytest
 
-#importing from parent folder
-import os,sys,inspect
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+import os, sys, inspect
+
+absolute_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
+current_dir = os.path.dirname(absolute_path)
 parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir) 
+sys.path.insert(0, parent_dir)
 
 PATH = sys.path[0]
 
 import subtitles
 
 
-
 def test_merge_two_subtitles():
-	sub1 = PATH+'/tests/subs/Matrix.eng.srt'
-	sub2 = PATH+'/tests/subs/Matrix.por.srt'
+	sub1 = PATH + '/tests/subs/Matrix.eng.srt'
+	sub2 = PATH + '/tests/subs/Matrix.por.srt'
 	new_sub = subtitles.merge_two_subtitles(sub1, sub2)
 	assert '<i>TRINITY: Is everything in place?' in new_sub
 	assert '{\\pos(192,48)}<font color="ffffff"><i>- Está tudo pronto?' in new_sub
-	
 	with pytest.raises(ValueError):
 		subtitles.merge_two_subtitles(-1, 0)
-	
-	with pytest.raises(SystemExit):	
+	with pytest.raises(SystemExit):
 		subtitles.merge_two_subtitles('sub1', 'sub2')
 
 
 def test_change_one_subtitle_color():
-	sub = PATH+'/tests/subs/Matrix.eng.srt'
+	sub = PATH + '/tests/subs/Matrix.eng.srt'
 	color = 'fafcfd'
 	new_sub = subtitles.change_one_subtitle(sub, color=color)
-	
 	assert color in new_sub[2]
-	assert color not in  new_sub[0] 
-	assert color not in new_sub[1] 
-	
+	assert color not in new_sub[0]
+	assert color not in new_sub[1]
 	with pytest.raises(SystemExit):
 		subtitles.change_one_subtitle('', color=color)
 
@@ -43,8 +39,8 @@ def test_change_one_subtitle_color():
 
 
 def test_change_one_subtitle_axis():
-	sub = PATH+'/tests/subs/Matrix.eng.srt'
-	x_axis = 200 			
+	sub = PATH + '/tests/subs/Matrix.eng.srt'
+	x_axis = 200
 	y_axis = 60
 	new_sub = subtitles.change_one_subtitle(sub, x_axis=x_axis, y_axis=y_axis)
 
@@ -53,20 +49,16 @@ def test_change_one_subtitle_axis():
 
 
 def test_change_subtitle_delay():
-	sub = PATH+'/tests/subs/Matrix.eng.srt'
+	sub = PATH + '/tests/subs/Matrix.eng.srt'
 	millis = 5000
 	new_sub = subtitles.change_subtitle_delay(millis, sub)
-	
 	assert new_sub[1] == '00:00:47,625 --> 00:00:49,751'
 
 	millis = -4000
 	new_sub = subtitles.change_subtitle_delay(millis, sub)
-	
 	assert new_sub[1] == '00:00:38,625 --> 00:00:40,751'
- 
 	with pytest.raises(SystemExit):
 		subtitles.change_subtitle_delay(millis, 'sub')
-	
 	with pytest.raises(ValueError):
 		subtitles.change_subtitle_delay(millis, -1)
 
@@ -75,7 +67,6 @@ def test_set_position():
 	x = 100
 	y = 50
 	position = subtitles.set_position(axis_x=x, axis_y=y, one_subtitle=False)
-	
 	assert '{\\pos(100,50)}' == position
 
 	position = subtitles.set_position(axis_x=x, one_subtitle=True)
