@@ -11,7 +11,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 
-from Strusion import subtitles
+import Strusion.subtitles as subtitles
 
 
 parser = argparse.ArgumentParser(description="Subtitle Merger")
