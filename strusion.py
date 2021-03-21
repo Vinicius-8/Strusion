@@ -1,6 +1,8 @@
+import sys
+sys.path.append('..')
 import argparse
 import IO
-import subtitles
+import Strusion.subtitles
 
 
 parser = argparse.ArgumentParser(description="Subtitle Merger")

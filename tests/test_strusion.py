@@ -2,6 +2,7 @@
 import os
 import sys
 import inspect
+
 sys.path.append('..')
 absolute_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
 current_dir = os.path.dirname(absolute_path)
