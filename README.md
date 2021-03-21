@@ -1,6 +1,4 @@
 # Strusion
-![Python](https://img.shields.io/badge/Python-3.7.4-yellow?style=flat-square)
-
 This python tool provides a subtitle' handler, that allows you to merge subtitles and change some features, like position, color and so on.
 ## Usage
 - [Merge two subtitles](#basic-merging)
