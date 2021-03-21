@@ -1,12 +1,3 @@
-import sys
-import os
-import inspect
-
-absolute_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
-current_dir = os.path.dirname(absolute_path)
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir)
-
 from Strusion import IO
 from math import floor
 from tqdm import tqdm
