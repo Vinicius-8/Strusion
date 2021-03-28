@@ -1,4 +1,5 @@
 # importing from parent folder
+import pytest
 import os
 import sys
 import inspect
@@ -32,3 +33,8 @@ def test_is_srt():
     sub = strusion.is_srt('my_subtitle.srv')
 
     assert not sub
+
+
+def test_main():
+    with pytest.raises(SystemExit):
+        strusion.main() == None

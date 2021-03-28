@@ -4,7 +4,8 @@ path = os.path.abspath(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(path)
 import argparse
 import IO
-from Strusion import subtitles
+# from Strusion import subtitles
+import subtitles
 
 
 parser = argparse.ArgumentParser(description="Subtitle Merger")
