@@ -35,6 +35,3 @@ def test_is_srt():
     assert not sub
 
 
-def test_main():
-    with pytest.raises(SystemExit):
-        strusion.main() == None
