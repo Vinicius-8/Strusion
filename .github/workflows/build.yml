@@ -28,7 +28,4 @@ jobs:
     - name: Generate python UI
       run: |
         # transforms .ui into a .py file
-        pyuic5 -x gui/strusion_gui.ui -o gui/strusion_gui.py      
-    - name: Test GUI implementation
-      run: |
-        python gui/strusion_gui_implementation.py
+        pyuic5 -x gui/strusion_gui.ui -o gui/strusion_gui.py  
