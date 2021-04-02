@@ -24,8 +24,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install pyinstaller
         
     - name: Generate python UI
       run: |
         # transforms .ui into a .py file
         pyuic5 -x gui/strusion_gui.ui -o gui/strusion_gui.py  
+    
+    - name: Build executable app
+      run: |
+        # generate a exe file with the GUI
+        pyinstaller --onefile -w gui\strusion_gui_implementation.py --name strusion.exe
