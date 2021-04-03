@@ -80,3 +80,4 @@ jobs:
         upload_url: ${{ steps.create-new-release.outputs.upload_url }}
         asset_path: ./strusion.exe
         asset_name: strusion-${{ github.run_number }}.exe
+        asset_content_name: application/octet-stream
