@@ -69,14 +69,14 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       with:
-        tag_name: v${{ github.run_number }}
-        release_name: V${{ github.run_number }}
+        tag_name: strusion v1.${{ github.run_number }}
+        release_name: Strusion V1.${{ github.run_number }}
 
     - name: Upload Asset to GitHub Release
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       with:
-        upload_url: ${{ steps.create-new-release }}
+        upload_url: ${{ steps.create-new-release.outputs.upload_url }}
         asset_path: ./strusion.exe
         asset_name: strusion-${{ github.run_number }}.exe
