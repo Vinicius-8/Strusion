@@ -77,6 +77,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       with:
-        upload_url: ${{ steps.create-new-release
+        upload_url: ${{ steps.create-new-release }}
         asset_path: ./strusion.exe
         asset_name: strusion-${{ github.run_number }}.exe
