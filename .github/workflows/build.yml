@@ -35,3 +35,45 @@ jobs:
       run: |
         # generate a exe file with the GUI
         pyinstaller --onefile -w gui\strusion_gui_implementation.py --name strusion.exe
+
+    - name: Display structure of files   
+      run: dir
+
+
+    - name: Upload Application
+      uses: actions/upload-artifact@v2
+      with:
+        name: strusion.exe
+        path: dist/
+        if-no-files-found: error
+
+  release:
+    name: Release excutable application to GitHub Releases
+    runs-on: windows-latest
+    needs: build
+    steps: 
+    - name: Download application
+      uses: actions/download-artifact@v2
+      with: 
+        name: strusion.exe
+
+    - name: Display structure of files   
+      run: dir
+
+    - name: Create GitHub Relase
+      id: create-new-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: V${{ github.run_number }}
+
+    - name: Upload Asset to GitHub Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+      with:
+        upload_url: ${{ steps.create-new-release
+        asset_path: ./strusion.exe
+        asset_name: strusion-${{ github.run_number }}.exe
