@@ -48,10 +48,13 @@ jobs:
         if-no-files-found: error
 
   release:
+
     name: Release excutable application to GitHub Releases
     runs-on: windows-latest
     needs: build
-    steps: 
+
+    steps:
+    - uses: actions/checkout@v2 
     - name: Download application
       uses: actions/download-artifact@v2
       with: 
